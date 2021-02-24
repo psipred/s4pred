@@ -1,4 +1,4 @@
-![S4PRED Logo](./images/s4pred.svg =250x)
+<img src="./images/s4pred.svg" width="100" height="100">
 # S4PRED
 
 A tool for accurate prediction of a protein's secondary structure from only it's amino acid sequence. 
@@ -21,9 +21,11 @@ The script hasn't been tested on newer Pytorch builds but it should run without 
 Clone the directory
 ```bash
 git clone https://github.com/psipred/s4pred
+cd s4pred
 ```
-Change to the `weights/` folder and download the model weights from our public server
+Make and change to the `weights/` folder and download the model weights from our public server
 ```bash
+mkdir weights
 cd weights
 wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights_1.pt
 wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights_2.pt
@@ -81,7 +83,7 @@ If you use S4PRED in your work please cite the following bioRxiv pre-print:
 Lewis Moffat and David T. Jones;
 bioRxiv, 2020-11-02,
 DOI:10.1101/2020.07.13.201459 
-(LINK)[https://www.biorxiv.org/content/10.1101/2020.07.13.201459v2]
+[LINK](https://www.biorxiv.org/content/10.1101/2020.07.13.201459v2)
 
 Here is the corresponding BibTex 
 ```bibtex
