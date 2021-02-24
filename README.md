@@ -1,4 +1,4 @@
-<img src="./images/s4pred.svg" width="800px">
+<img src="./images/s4pred.svg" width="600px">
 
 # S4PRED
 
