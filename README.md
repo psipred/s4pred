@@ -1,4 +1,4 @@
-<img src="./images/s4pred.svg" width="400" float='center'>
+<img src="./images/s4pred.svg" width="400" style="max-width:100%;">
 # S4PRED
 
 A tool for accurate prediction of a protein's secondary structure from only it's amino acid sequence. 
