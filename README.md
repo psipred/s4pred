@@ -1,4 +1,4 @@
-![S4PRED Logo](./images/s4pred.svg)
+![S4PRED Logo](./images/s4pred.png)
  
 # S4PRED
 
