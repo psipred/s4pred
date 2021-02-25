@@ -1,4 +1,4 @@
- <img src="./images/s4pred.svg" style="display: block; margin-left: auto; margin-right: auto; width: 99%;">
+![S4PRED Logo](./images/s4pred.svg)
  
 # S4PRED
 
