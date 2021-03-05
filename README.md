@@ -73,7 +73,7 @@ The above example output of this file is located in `examples/1qys_ss.fas`.
 ## Example Run
 The following is an example run on the sequence of TOP7 (PDB ID: 1QYS) using the GPU and output to the FASTA like format. The corresponding fasta input file is located in `examples/1qys.fas` (this is the PDB FASTA file stripped of the 6-HIS tag on the C-Terminus). 
 ```bash
-python run_model.py --device GPU --outfmt fas example/1qys.fas > 1qys_ss.fas
+python run_model.py --device gpu --outfmt fas example/1qys.fas > 1qys_ss.fas
 ```
 
 # Citation
