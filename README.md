@@ -6,6 +6,8 @@ A tool for accurate prediction of a protein's secondary structure from only it's
 
 This repo contains the fully trained inference model built in Pytorch. Its a simple one line command to run it on a fasta file containing a protein sequence. S4PRED is a product of our paper [A Deep Semi-Supervised Framework for Accurate Modelling of Orphan Sequences](https://www.biorxiv.org/content/10.1101/2020.07.13.201459v2).
 
+We also provide the 1.08M example pseudo-labelled training set used for training S4PRED. 
+
 S4PRED is a state-of-the-art single-sequence model meaning it doesn't use homology information to make predictions, only the primary amino acid sequence. 
 
 
@@ -24,7 +26,7 @@ Clone the directory
 git clone https://github.com/psipred/s4pred
 cd s4pred
 ```
-Make and change to the `weights/` folder and download the model weights from our public server
+Make the `weights/` directory and `cd` into it, then download the model weights from our public server.
 ```bash
 mkdir weights
 cd weights
@@ -75,6 +77,34 @@ The following is an example run on the sequence of TOP7 (PDB ID: 1QYS) using the
 ```bash
 python run_model.py --device gpu --outfmt fas example/1qys.fas > 1qys_ss.fas
 ```
+
+
+# Dataset
+We have made the pseudo-labelled training set available to download from our public server. These are in a simple FASTA flat file `pseudo-labelled training set`.
+```bash
+wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/s4pred_train.fas
+```
+There are 1080886 examples in the set and the contents of the flat file look like this:
+```
+>A0A1J5K7I4
+MYVCVCNGITEEMLDTAQKQGLSDREILNRLGVGNSCGVCVIDALDNMRSNSLKSQKTSNRKDSKKS
+CEEEECCCCCHHHHHHHHHCCCCHHHHHHHHCCCCCCCHHHHHHHHHHHHHHHHHHHHHCCCCCCCC
+>A0A2S4ZHT0
+MRPDLMGPGFVQVLARTTLVSRHRPRQQLPSGTVRHAMVQVTERFFSHGPHRPAPGFTPMVRQRYCCA
+CCCCCCCCCHHHHHEECEECCCCCCHHCCCCHHHHHEEEEEEHHHHHCCCCCCCCCCCHHHCCCCCCC
+>A0A076ETI5
+MGALSPSHWAIIAVVLVVLFGSKKLPDAARGLGRSMRILKTEVGELQADAPELEK
+CCCCCHHHHHHHHHHHHHHHCCCCCHHHHHHHHHHHHHHHHHHHHHHCCCHHHCC
+...
+```
+The examples go label, then sequence on a new line, and then the 3 class predicted secondary structure on a new line.
+This doesn't adhere to the old 80 char line limit of FASTA files so it's easier to parse. 
+If you'd like a quick parser script raise an issue or submit a pull request. 
+The label is the Uniprot ID of the representative sequence of the Uniclust30 cluster that the example came from.
+
+Importantly, this training set has had several different filters applied (see our paper) to remove homology from the CB513 test set.
+This makes the dataset ideal for training not just secondary structure predictors but also unsupervised sequence models. 
+In both cases, using this training set with CB513 as a test set provides a strong test of generalization.     
 
 # Citation
 
