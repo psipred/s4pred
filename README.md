@@ -80,7 +80,8 @@ python run_model.py --device gpu --outfmt fas example/1qys.fas > 1qys_ss.fas
 
 
 # Dataset
-We have made the pseudo-labelled training set available to download from our public server. These are in a simple FASTA flat file `pseudo-labelled training set`.
+We have made the pseudo-labelled training set available to download from our public server. 
+These are in a simple FASTA flat file, `s4pred_train.fas`.
 ```bash
 wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/s4pred_train.fas
 ```
