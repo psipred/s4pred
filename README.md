@@ -85,6 +85,8 @@ These are in a simple FASTA flat file, `s4pred_train.fas`.
 ```bash
 wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/s4pred_train.fas
 ```
+NOTE: This will be available upon release of the published article, which is currently under review. 
+
 There are 1080886 examples in the set and the contents of the flat file look like this:
 ```
 >A0A1J5K7I4
