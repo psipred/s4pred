@@ -12,6 +12,16 @@ Inference Only Version of S4PRED - Single Sequence Secondary Structure Pred
 This is culled down to exclude the various DropConnect/Dropout etc. from the 
 training methods so that it is more clear.
 
+If you'd like a training version of the model please raise an issue or submit a PR.
+The AWD-GRU training script model was a tweak on the offical Salesforce 
+AWD-LSTM (https://github.com/salesforce/awd-lstm-lm/). It needed to be adapted to 
+take multiple layers of RNNs. 
+
+Note on the model loading:
+    Model loading in the init() with hardcoded weights is big bad.
+    It is next on the list for improving.
+
+
 """
 
 import torch
