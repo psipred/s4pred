@@ -17,9 +17,7 @@ The AWD-GRU training script model was a tweak on the offical Salesforce
 AWD-LSTM (https://github.com/salesforce/awd-lstm-lm/). It needed to be adapted to 
 take multiple layers of RNNs. 
 
-Note on the model loading:
-    Model loading in the init() with hardcoded weights is big bad.
-    It is next on the list for improving.
+
 
 
 """
