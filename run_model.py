@@ -12,6 +12,7 @@ from __future__ import print_function
 
 import torch
 import argparse
+import os 
 
 from network import S4PRED
 from utilities import loadfasta
@@ -43,6 +44,26 @@ s4pred=S4PRED().to(device)
 s4pred.eval()
 # Setting requires_grad is redundant but pytorch has been weird in the past
 s4pred.requires_grad=False
+
+
+# Loading model parameters 
+
+scriptdir = os.path.dirname(os.path.realpath(__file__))
+                            
+weight_files=['/weights/weights_1.pt',
+              '/weights/weights_2.pt',
+              '/weights/weights_3.pt',
+              '/weights/weights_4.pt',
+              '/weights/weights_5.pt']
+
+# Manually listing for clarity and hot swapping in future
+s4pred.model_1.load_state_dict(torch.load(scriptdir + weight_files[0], map_location=lambda storage, loc: storage))
+s4pred.model_2.load_state_dict(torch.load(scriptdir + weight_files[1], map_location=lambda storage, loc: storage))
+s4pred.model_3.load_state_dict(torch.load(scriptdir + weight_files[2], map_location=lambda storage, loc: storage))
+s4pred.model_4.load_state_dict(torch.load(scriptdir + weight_files[3], map_location=lambda storage, loc: storage))
+s4pred.model_5.load_state_dict(torch.load(scriptdir + weight_files[4], map_location=lambda storage, loc: storage))
+
+
 
 
 # =============================================================================

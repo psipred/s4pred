@@ -28,7 +28,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-import os
+
 
 
 class ResidueEmbedding(nn.Embedding):
@@ -71,25 +71,13 @@ class S4PRED(nn.Module):
             This loads the ensemble of models in a lazy way but its clear and 
             leaves the weight loading out of the run_model script. 
         """
-        scriptdir = os.path.dirname(os.path.realpath(__file__))
-                                    
-        weight_files=['/weights/weights_1.pt',
-                      '/weights/weights_2.pt',
-                      '/weights/weights_3.pt',
-                      '/weights/weights_4.pt',
-                      '/weights/weights_5.pt']
-        
+                                            
         # Manually listing for clarity and hot swapping in future
         self.model_1=GRUnet()
-        self.model_1.load_state_dict(torch.load(scriptdir + weight_files[0], map_location=lambda storage, loc: storage))
         self.model_2=GRUnet()
-        self.model_2.load_state_dict(torch.load(scriptdir + weight_files[1], map_location=lambda storage, loc: storage))
         self.model_3=GRUnet()
-        self.model_3.load_state_dict(torch.load(scriptdir + weight_files[2], map_location=lambda storage, loc: storage))
         self.model_4=GRUnet()
-        self.model_4.load_state_dict(torch.load(scriptdir + weight_files[3], map_location=lambda storage, loc: storage))
         self.model_5=GRUnet()
-        self.model_5.load_state_dict(torch.load(scriptdir + weight_files[4], map_location=lambda storage, loc: storage))
         
     def forward(self, x):
         y_1=self.model_1(x)
