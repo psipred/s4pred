@@ -57,6 +57,7 @@ weight_files=['/weights/weights_1.pt',
               '/weights/weights_5.pt']
 
 # Manually listing for clarity and hot swapping in future
+# Inelegant and to be cleaned up in the future
 s4pred.model_1.load_state_dict(torch.load(scriptdir + weight_files[0], map_location=lambda storage, loc: storage))
 s4pred.model_2.load_state_dict(torch.load(scriptdir + weight_files[1], map_location=lambda storage, loc: storage))
 s4pred.model_3.load_state_dict(torch.load(scriptdir + weight_files[2], map_location=lambda storage, loc: storage))
