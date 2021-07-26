@@ -111,25 +111,32 @@ In both cases, using this training set with CB513 as a test set provides a stron
 
 # Citation
 
-If you use S4PRED in your work please cite the following bioRxiv pre-print: 
+If you use S4PRED in your work please cite the following link to the published article in Bioinformatics: 
 
-**A Deep Semi-Supervised Framework for Accurate Modelling of Orphan Sequences**</br>
+**Increasing the Accuracy of Single Sequence Prediction Methods Using a Deep Semi-Supervised Learning Framework**</br>
 Lewis Moffat and David T. Jones;
-bioRxiv, 2020-11-02,
-DOI:10.1101/2020.07.13.201459 
-[LINK](https://www.biorxiv.org/content/10.1101/2020.07.13.201459v2)
+Bioinformatics, 07-2021,
+DOI:10.1093/bioinformatics/btab491 
+[LINK](https://doi.org/10.1093/bioinformatics/btab491)
 
 Here is the corresponding BibTex 
+
 ```bibtex
-@article {Moffat2020.07.13.201459,
-	author = {Moffat, Lewis and Jones, David T.},
-	title = {A Deep Semi-Supervised Framework for Accurate Modelling of Orphan Sequences},
-	elocation-id = {2020.07.13.201459},
-	year = {2020},
-	doi = {10.1101/2020.07.13.201459},
+@article{10.1093/bioinformatics/btab491,
+    author = {Moffat, Lewis and Jones, David T},
+    title = "{Increasing the Accuracy of Single Sequence Prediction Methods Using a Deep Semi-Supervised Learning Framework}",
+    journal = {Bioinformatics},
+    year = {2021},
+    month = {07},
+    abstract = "{Over the past 50 years, our ability to model protein sequences with evolutionary information has progressed in leaps and bounds. However, even with the latest deep learning methods, the modelling of a critically important class of proteins, single orphan sequences, remains unsolved.By taking a bioinformatics approach to semi-supervised machine learning, we develop Profile Augmentation of Single Sequences (PASS), a simple but powerful framework for building accurate single-sequence methods. To demonstrate the effectiveness of PASS we apply it to the mature field of secondary structure prediction. In doing so we develop S4PRED, the successor to the open-source PSIPRED-Single method, which achieves an unprecedented Q3 score of 75.3\\% on the standard CB513 test. PASS provides a blueprint for the development of a new generation of predictive methods, advancing our ability to model individual protein sequences.The S4PRED model is available as open source software on the PSIPRED GitHub repository (https://github.com/psipred/s4pred), along with documentation. It will also be provided as a part of the PSIPRED web service (http://bioinf.cs.ucl.ac.uk/psipred/)Supplementary data are available at Bioinformatics online.}",
+    issn = {1367-4803},
+    doi = {10.1093/bioinformatics/btab491},
+    url = {https://doi.org/10.1093/bioinformatics/btab491},
+    note = {btab491},
+    eprint = {https://academic.oup.com/bioinformatics/advance-article-pdf/doi/10.1093/bioinformatics/btab491/38853041/btab491.pdf},
 }
 ```
-This will be updated to point to the published article when it is released. 
+
 
 
 
