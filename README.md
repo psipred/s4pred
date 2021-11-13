@@ -4,9 +4,9 @@
 
 A tool for accurate prediction of a protein's secondary structure from only it's amino acid sequence. 
 
-This repo contains the fully trained inference model built in Pytorch. Its a simple one line command to run it on a fasta file containing a protein sequence. S4PRED is a product of our paper [A Deep Semi-Supervised Framework for Accurate Modelling of Orphan Sequences](https://www.biorxiv.org/content/10.1101/2020.07.13.201459v2).
+This repo contains the fully trained inference model built in Pytorch. Its a simple one line command to run it on a fasta file containing a protein sequence. S4PRED is a product of our paper [Increasing the accuracy of single sequence prediction methods using a deep semi-supervised learning framework](https://academic.oup.com/bioinformatics/article/37/21/3744/6313164) published in Bioinformatics.
 
-We also provide the 1.08M example pseudo-labelled training set used for training S4PRED. 
+We also provide the 1.08M example pseudo-labelled training set used for training S4PRED. This has been cross-validated against the CB513 test set using a variety of sequence-searching-based methods, as real structure labels aren't available. Proper cross-validation when working with large sets of protein sequences is incredibly important, especially when working with powerful parametric models like deep neural networks.
 
 S4PRED is a state-of-the-art single-sequence model meaning it doesn't use homology information to make predictions, only the primary amino acid sequence. 
 
