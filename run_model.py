@@ -5,8 +5,9 @@ Created on Thu Jun  4 14:49:37 2020
 @author:
     Lewis Moffat
     Bioinformatics Group - Comp. Sci. Dep., University College London (UCL)
-    Github: CraftyColossus
+    Github: limitloss
 
+TO DO: Add option for sequential model loading and inference, and pull model loading out of module code (bad practice)
 """
 from __future__ import print_function
 
@@ -57,7 +58,7 @@ weight_files=['/weights/weights_1.pt',
               '/weights/weights_5.pt']
 
 # Manually listing for clarity and hot swapping in future
-# Inelegant and to be cleaned up in the future
+# Inelegant, ugly ugly, to be cleaned up in the future
 s4pred.model_1.load_state_dict(torch.load(scriptdir + weight_files[0], map_location=lambda storage, loc: storage))
 s4pred.model_2.load_state_dict(torch.load(scriptdir + weight_files[1], map_location=lambda storage, loc: storage))
 s4pred.model_3.load_state_dict(torch.load(scriptdir + weight_files[2], map_location=lambda storage, loc: storage))
