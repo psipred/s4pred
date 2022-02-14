@@ -26,17 +26,12 @@ Clone the directory
 git clone https://github.com/psipred/s4pred
 cd s4pred
 ```
-Make the `weights/` directory and `cd` into it, then download the model weights from our public server.
+Now we download a tarball of the model weights from our public server and then extract.
 ```bash
-mkdir weights
-cd weights
-wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights_1.pt
-wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights_2.pt
-wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights_3.pt
-wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights_4.pt
-wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights_5.pt
+wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz
+tar -xvzf weights.tar.gz
 ``` 
-Each weight file is ~86MB and so all together make up roughly 430MB. If you have python and Pytorch installed you should be ready to go. 
+This leaves you with a `weights` directory containing the five models. Each weight file is ~86MB and so all together make up roughly 430MB uncompressed (~395M compressed). If you would like to check it, the MD5 of the tarball is `e04ad7d10b61551f7e07a86b65bb88dc`. If you have python and Pytorch installed you should be ready to go. 
 
 # Usage
 
@@ -45,6 +40,13 @@ The S4PRED model can be used to predict a sequence's secondary structure with th
 python run_model.py YOUR_FASTA.fas > YOUR_OUTPUT.ss2
 ```
 The results of the prediction are piped to `stdout` and prediction should take less than a second. 
+
+
+## Input Sequence File
+The expected input is a FASTA formatted file with a single sequence in it, `YOUR_FASTA.fas` in the example above. Importantly, it assumes the file contains a single sequence. If you'd like to predict for a large number of sequences, and you're not too concerned about IO overhead and run times, I'd recommend splitting your sequences into individual FASTA files and prediction for each of them. 
+
+
+## Optional Inputs
 There are two optional arguments you can give:
 
 - `--device`
