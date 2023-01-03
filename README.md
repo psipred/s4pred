@@ -17,7 +17,7 @@
 
 A tool for accurate prediction of a protein's secondary structure from only it's amino acid sequence. 
 
-This repo contains the fully trained inference model built in Pytorch. Its a simple one line command to run it on a fasta file containing a protein sequence. S4PRED is a product of our paper [Increasing the accuracy of single sequence prediction methods using a deep semi-supervised learning framework](https://academic.oup.com/bioinformatics/article/37/21/3744/6313164) published in Bioinformatics.
+This repo contains the fully trained inference model built in Pytorch. Its a simple one line command to run it on a FASTA file containing a protein sequence. S4PRED is a product of our paper [Increasing the accuracy of single sequence prediction methods using a deep semi-supervised learning framework](https://academic.oup.com/bioinformatics/article/37/21/3744/6313164) published in Bioinformatics.
 
 We also provide the 1.08M example pseudo-labelled training set used for training S4PRED. This has been cross-validated against the CB513 test set using a variety of sequence-searching-based methods, as real structure labels aren't available. Proper cross-validation when working with large sets of protein sequences is incredibly important, especially when working with powerful parametric models like deep neural networks.
 
@@ -88,7 +88,7 @@ CCCEEEEEEECCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEE
 The above example output of this file is located in `examples/1qys_ss.fas`.
 
 ### Example Run
-The following is an example run on the sequence of TOP7 (PDB ID: 1QYS) using the GPU and output to the FASTA like format. The corresponding fasta input file is located in `examples/1qys.fas` (this is the PDB FASTA file stripped of the 6-HIS tag on the C-Terminus). 
+The following is an example run on the sequence of TOP7 (PDB ID: 1QYS) using the GPU and output to the FASTA like format. The corresponding FASTA input file is located in `examples/1qys.fas` (this is the PDB FASTA file stripped of the 6-HIS tag on the C-Terminus). 
 ```bash
 python run_model.py --device gpu --outfmt fas example/1qys.fas > 1qys_ss.fas
 ```
