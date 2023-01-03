@@ -12,14 +12,14 @@ S4PRED is a state-of-the-art single-sequence model meaning it doesn't use homolo
 
 
 
-# Requirements
+## Requirements
 
 - Python 3.7 or greater
 - Pytorch 1.5.1 
 
 The script hasn't been tested on newer Pytorch builds but it should run without any issues. 
 
-# Installation
+## Installation
 
 Clone the directory
 ```bash
@@ -33,7 +33,7 @@ tar -xvzf weights.tar.gz
 ``` 
 This leaves you with a `weights/` directory containing the five models. Each weight file is ~86MB and so all together make up roughly 430MB uncompressed (~395M compressed). If you would like to check it, the MD5 of the tarball is `e04ad7d10b61551f7e07a86b65bb88dc`. If you have python and Pytorch installed you should be ready to go. 
 
-# Usage
+## Usage
 
 The S4PRED model can be used to predict a sequence's secondary structure with the following:
 ```bash
@@ -42,11 +42,11 @@ python run_model.py YOUR_FASTA.fas > YOUR_OUTPUT.ss2
 The results of the prediction are piped to `stdout` and prediction should take less than a second. 
 
 
-## Input Sequence File
+### Input Sequence File
 The expected input is a FASTA formatted file with a single sequence in it, `YOUR_FASTA.fas` in the example above. Importantly, it assumes the file contains a single sequence. If you'd like to predict for a large number of sequences, and you're not too concerned about IO overhead and run times, I'd recommend splitting your sequences into individual FASTA files and prediction for each of them. 
 
 
-## Optional Inputs
+### Optional Inputs
 There are two optional arguments you can give:
 
 - `--device`
@@ -74,14 +74,14 @@ CCCEEEEEEECCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEE
 ```
 The above example output of this file is located in `examples/1qys_ss.fas`.
 
-## Example Run
+### Example Run
 The following is an example run on the sequence of TOP7 (PDB ID: 1QYS) using the GPU and output to the FASTA like format. The corresponding fasta input file is located in `examples/1qys.fas` (this is the PDB FASTA file stripped of the 6-HIS tag on the C-Terminus). 
 ```bash
 python run_model.py --device gpu --outfmt fas example/1qys.fas > 1qys_ss.fas
 ```
 
 
-# Dataset
+## Dataset
 We have made the pseudo-labelled training set available to download from our public server. 
 These are in a simple FASTA flat file, `s4pred_train.fas`.
 ```bash
@@ -111,7 +111,7 @@ Importantly, this training set has had several different filters applied (see ou
 This makes the dataset ideal for training not just secondary structure predictors but also unsupervised sequence models. 
 In both cases, using this training set with CB513 as a test set provides a strong test of generalization.     
 
-# Citation
+## Citation
 
 If you use S4PRED in your work please cite the following link to the published article in Bioinformatics: 
 
@@ -121,7 +121,7 @@ Bioinformatics, 07-2021,
 DOI:10.1093/bioinformatics/btab491 
 [LINK](https://doi.org/10.1093/bioinformatics/btab491)
 
-Here is the corresponding BibTex 
+Here is the corresponding BibTex: 
 
 ```bibtex
 @article{10.1093/bioinformatics/btab491,
@@ -130,15 +130,19 @@ Here is the corresponding BibTex
     journal = {Bioinformatics},
     year = {2021},
     month = {07},
-    abstract = "{Over the past 50 years, our ability to model protein sequences with evolutionary information has progressed in leaps and bounds. However, even with the latest deep learning methods, the modelling of a critically important class of proteins, single orphan sequences, remains unsolved.By taking a bioinformatics approach to semi-supervised machine learning, we develop Profile Augmentation of Single Sequences (PASS), a simple but powerful framework for building accurate single-sequence methods. To demonstrate the effectiveness of PASS we apply it to the mature field of secondary structure prediction. In doing so we develop S4PRED, the successor to the open-source PSIPRED-Single method, which achieves an unprecedented Q3 score of 75.3\\% on the standard CB513 test. PASS provides a blueprint for the development of a new generation of predictive methods, advancing our ability to model individual protein sequences.The S4PRED model is available as open source software on the PSIPRED GitHub repository (https://github.com/psipred/s4pred), along with documentation. It will also be provided as a part of the PSIPRED web service (http://bioinf.cs.ucl.ac.uk/psipred/)Supplementary data are available at Bioinformatics online.}",
     issn = {1367-4803},
     doi = {10.1093/bioinformatics/btab491},
     url = {https://doi.org/10.1093/bioinformatics/btab491},
-    note = {btab491},
-    eprint = {https://academic.oup.com/bioinformatics/advance-article-pdf/doi/10.1093/bioinformatics/btab491/38853041/btab491.pdf},
 }
 ```
 
+## Changelog
 
+For a log of recent changes please see the changelog in [CHANGELOG.md](https://github.com/psipred/s4pred/CHANGELOG.md). This is currently being updated manually by [@limitloss](https://github.com/limitloss).
 
+  
+
+## Contact
+
+Current dev & maintainer is [@limitloss](https://github.com/limitloss). Please don't hesitate to reach out, either via my email, which can be found by clicking the [link to the paper](https://github.com/psipred/s4pred/CHANGELOG.md), and clicking on Lewis' name, or on twitter [@limitloss](https://twitter.com/limitloss).  
 
