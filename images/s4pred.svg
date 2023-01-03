@@ -7,16 +7,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="36.318722mm"
-   height="9.575367mm"
-   viewBox="0 0 36.318722 9.575367"
+   width="200"
+   height="36.190365"
+   viewBox="0 0 52.916667 9.575367"
    version="1.1"
    id="svg4544"
    sodipodi:docname="s4pred.svg"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   inkscape:export-filename="/home/lmoffat/Documents/repos/s4pred/images/s4pred.png"
-   inkscape:export-xdpi="583.32776"
-   inkscape:export-ydpi="583.32776">
+   inkscape:export-filename="/home/lmoffat/Documents/maintenance/s4pred/images/s4pred.png"
+   inkscape:export-xdpi="614.40002"
+   inkscape:export-ydpi="614.40002">
   <defs
      id="defs4538" />
   <sodipodi:namedview
@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="12.893234"
-     inkscape:cy="6.3538004"
+     inkscape:zoom="3.959798"
+     inkscape:cx="22.131207"
+     inkscape:cy="13.139895"
      inkscape:document-units="mm"
-     inkscape:current-layer="g1400"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:pagecheckerboard="true"
      inkscape:window-width="2560"
@@ -43,7 +43,9 @@
      fit-margin-right="1"
      fit-margin-bottom="1"
      inkscape:document-rotation="0"
-     lock-margins="false" />
+     lock-margins="false"
+     units="px"
+     inkscape:object-paths="true" />
   <metadata
      id="metadata4541">
     <rdf:RDF>
@@ -60,7 +62,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-47.519543,-84.021399)">
+     transform="translate(-47.519543,-84.0214)">
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58329964px;line-height:1.25;font-family:Carlito;-inkscape-font-specification:Carlito;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458299"
@@ -102,7 +104,8 @@
        x="42.427826"
        y="83.065468" />
     <g
-       id="g1400">
+       id="g1400"
+       transform="translate(8.2989718,1.2430063e-6)">
       <g
          id="g3784">
         <path
