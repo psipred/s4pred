@@ -17,6 +17,7 @@ and this project would like to in spirit adhere to [Semantic Versioning](https:/
 ### Changed
 
 - Slimmed down the contents of the Citation section in the README. 
+- Fixed badges and made them visible.
 
 ### Removed
 

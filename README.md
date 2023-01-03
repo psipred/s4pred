@@ -1,4 +1,17 @@
 ![S4PRED Logo](./images/s4pred.png)
+
+<p align="center">
+	<a href="CHANGELOG.md">
+        <img src="https://img.shields.io/badge/version-0.0.1-green?style=flat-square&logo=appveyor.svg" alt="Version">
+    </a>
+    <a href="LICENSE">
+        <img src="https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg" alt="GPL-3.0 License">
+    </a>
+</p>
+
+<br>
+
+
  
 # S4PRED
 
@@ -146,3 +159,7 @@ For a log of recent changes please see the changelog in [CHANGELOG.md](https://g
 
 Current dev & maintainer is [@limitloss](https://github.com/limitloss). Please don't hesitate to reach out, either via my email, which can be found by clicking the [link to the paper](https://github.com/psipred/s4pred/CHANGELOG.md), and clicking on Lewis' name, or on twitter [@limitloss](https://twitter.com/limitloss).  
 
+[changelog]: ./CHANGELOG.md
+[license]: ./LICENSE
+[version-badge]: https://img.shields.io/badge/version-0.0.1-green?style=flat-square&logo=appveyor.svg
+[license-badge]: https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg
