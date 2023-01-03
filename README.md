@@ -31,7 +31,7 @@ Now we download a tarball of the model weights from our public server and then e
 wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz
 tar -xvzf weights.tar.gz
 ``` 
-This leaves you with a `weights` directory containing the five models. Each weight file is ~86MB and so all together make up roughly 430MB uncompressed (~395M compressed). If you would like to check it, the MD5 of the tarball is `e04ad7d10b61551f7e07a86b65bb88dc`. If you have python and Pytorch installed you should be ready to go. 
+This leaves you with a `weights/` directory containing the five models. Each weight file is ~86MB and so all together make up roughly 430MB uncompressed (~395M compressed). If you would like to check it, the MD5 of the tarball is `e04ad7d10b61551f7e07a86b65bb88dc`. If you have python and Pytorch installed you should be ready to go. 
 
 # Usage
 
