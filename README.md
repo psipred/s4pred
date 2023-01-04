@@ -29,8 +29,9 @@ S4PRED is a state-of-the-art single-sequence model meaning it doesn't use homolo
 
 - Python 3.7 or greater
 - Pytorch 1.5.1 
+- Biopython 1.78 or greater
 
-The script hasn't been tested on newer Pytorch builds but it should run without any issues. 
+The script hasn't been tested on newer Pytorch builds but it should run without any issues. Likewise, most reasonably contemporary Biopython versions should be sufficient, barring some of the oldest.  
 
 ## Installation
 
@@ -53,14 +54,20 @@ The S4PRED model can be used to predict a sequence's secondary structure with th
 python run_model.py YOUR_FASTA.fas > YOUR_OUTPUT.ss2
 ```
 The results of the prediction are piped to `stdout` and prediction should take less than a second. 
+Another example:
+```bash
+python run_model.py --device gpu --save-files --outdir /home/the_user/s4pred_preds/ --save-by-idx ./example/multi_seqs.ss2
+```
+This produces predictions, using an available GPU, for the three sequences in the example FASTA file provided in `./example/multi_seqs.fas`. These are saved as `s4_out_0.ss2`, `s4_out_1.ss2`, and `s4_out_2.ss2` in  the directory `/home/the_user/s4pred_preds/`.
 
 
 ### Input Sequence File
-The expected input is a FASTA formatted file with a single sequence in it, `YOUR_FASTA.fas` in the example above. Importantly, it assumes the file contains a single sequence. If you'd like to predict for a large number of sequences, and you're not too concerned about IO overhead and run times, I'd recommend splitting your sequences into individual FASTA files and prediction for each of them. 
 
+The expected input is a FASTA formatted file with one or more sequences in it, `YOUR_FASTA.fas` in the example above. S4PRED will produce seperate predictions for each sequence contained in the FASTA file. See the different options below for how predictions are saved en masse. This is different from the first version of S4PRED (v1.0.0) which operated on files containing a single sequence. 
 
 ### Optional Inputs
-There are two optional arguments you can give:
+
+There are several optional arguments you can give. Running `python run_model.py -h` from a terminal will print out all options with short descriptions. More explanation is included below:
 
 - `--device`
     - This can be either `cpu` or `gpu`. 
@@ -79,7 +86,7 @@ This specifies which output format to use. `ss2` is the default and it correspon
 ```
 A full example output of this file is located in `examples/1qys.ss2`.
 
-The alternative `fas` output returns the sequence FASTA file with the predicted secondary structure concatenated on a second line. This is similar to the FASTA flat-file that the RCSB PDB provides for all sequences and their DSSP based secondary structure (Downloaded from [here](https://cdn.rcsb.org/etl/kabschSander/ss.txt.gz)). Here is an example:
+The alternative `fas` output returns the sequence FASTA file with the predicted secondary structure concatenated on a second line. This is similar to the FASTA flat-file that the RCSB PDB provides for all sequences and their DSSP based secondary structure (Downloaded from [here](https://cdn.rcsb.org/etl/kabschSander/ss.txt.gz)). We note that it doesn't appear that the PDB is continuing to provide up-to-date versions of the flat file. Here is an example:
 ```
 >1QYS_1|Chain A|TOP7|Computationally Designed Sequence
 MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQL
@@ -87,10 +94,25 @@ CCCEEEEEEECCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEE
 ```
 The above example output of this file is located in `examples/1qys_ss.fas`.
 
+- `--fas-conf`
+    - Including this flag has S4PRED output the 3-class confidence scores (i.e. those output in the `.ss2` format) as three additional lines if using `.fas` output. As the second line is the sequence, and the third line is the class assignment, the fourth through sixth lines are the loop, helix, and strand probabilities respectively. 
+
+- `--silent`
+    - Flag to suppress printing predictions to stdout.
+    
+- `--save-files` 
+    - Flag to save each input sequence prediction in an individual file. Makes and saves to a directory called `preds/` in the same dir as this script unless --outdir is specified. **Note:** without the  `--save-by-idx` described below, the files are saved using the name record that Biopython extracts from the header line of the FASTA file. It is common for this to produce somewhat messy file names (*TO DO:* add name and ID post processing). 
+
+- `--outdir p`
+    - Absolute file-path `p`, where files are to be saved. If --save-files is used. If not specified, it defaults to making a new directory in the S4PRED directory called `preds/` and then saves sequence predictions in that dir. 
+    
+- `--save-by-idx`
+    - If saving with --save-files, use a counter to name files instead of sequence ID. This uses the default file name prefix of `s4_out_` meaning the files are saved as `s4_out_0.ss2` or `s4_out_0.fas` for the first sequence in a FASTA file. 
+
 ### Example Run
 The following is an example run on the sequence of TOP7 (PDB ID: 1QYS) using the GPU and output to the FASTA like format. The corresponding FASTA input file is located in `examples/1qys.fas` (this is the PDB FASTA file stripped of the 6-HIS tag on the C-Terminus). 
 ```bash
-python run_model.py --device gpu --outfmt fas example/1qys.fas > 1qys_ss.fas
+python run_model.py --device gpu --outfmt fas ./example/1qys.fas > 1qys_ss.fas
 ```
 
 
@@ -99,8 +121,7 @@ We have made the pseudo-labelled training set available to download from our pub
 These are in a simple FASTA flat file, `s4pred_train.fas`.
 ```bash
 wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/s4pred_train.fas
-```
-This now available! 
+``` 
 
 There are 1080886 examples in the set and the contents of the flat file look like this:
 ```
@@ -123,6 +144,15 @@ The label is the Uniprot ID of the representative sequence of the Uniclust30 clu
 Importantly, this training set has had several different filters applied (see our paper) to remove homology from the CB513 test set.
 This makes the dataset ideal for training not just secondary structure predictors but also unsupervised sequence models. 
 In both cases, using this training set with CB513 as a test set provides a strong test of generalization.     
+
+## Inference Code
+
+If you'd like to train your own version of S4PRED using the AWD-GRU model we used we recommend building off the offical Salesforce 
+AWD-LSTM (https://github.com/salesforce/awd-lstm-lm/) of which our model is a variant. The inference code used in this repo has been pared back to be clean and minimalist. As such, most of the things, like DropConnect, that make the AWD-LSTM what it is, are not present.  
+
+### Batched Sequence Prediction
+
+The current inference script produces predictions for sequences in batches of 1 for end-user clarity and is very fast regardless. That said, if you would like to run S4PRED on millions or billions of sequences there are obivously large benefits to be had from predicting in batches of several hundred sequences and higher. If this is of interest, please don't hesitate to raise an issue or get in touch. 
 
 ## Citation
 

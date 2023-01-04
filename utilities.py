@@ -4,11 +4,11 @@ Created on Thu Jun  4 14:55:56 2020
 
 @author:
     Lewis Moffat
-    Bioinformatics Group - Comp. Sci. Dep., University College London (UCL)
-    Github: CraftyColossus
+    Github: limitloss
 
 """
 
+from Bio import SeqIO
 
 def aas2int(seq):
     aanumdict = {'A':0, 'R':1, 'N':2, 'D':3, 'C':4, 'Q':5, 'E':6, 'G':7, 'H':8, 
@@ -16,7 +16,7 @@ def aas2int(seq):
              'W':17, 'Y':18, 'V':19}
     return [aanumdict.get(res, 20) for res in seq]
 
-def loadfasta(fasta_file="test_seqs.fas"):
+def LEGACY_loadfasta(fasta_file="test_seqs.fas"):
     '''
     Assumes a fasta file containing a single sequence
     '''
@@ -33,3 +33,23 @@ def loadfasta(fasta_file="test_seqs.fas"):
     iseqs=aas2int(seqs)
     data=[name,iseqs,seqs]
     return data 
+
+def loadfasta(fasta_file="test_seqs.fas"):
+    '''
+    Takes a single FASTA file containing a variable number of sequences.
+    Returns a list of each example, where each example is a list itself of the 
+    Biopython-determined name string, the sequence as a list of integers, and the
+    original sequence as a string.
+    '''
+    sequences = []
+    
+    records = list(SeqIO.parse(fasta_file, "fasta"))
+    for record in records:
+        name = record.name
+        seq = str(record.seq)
+        # Sanity checks for lowercase characters, gaps, etc.
+        name = name.rstrip().upper().replace('-','')
+        iseq = aas2int(seq)
+        sequences.append([name,iseq,seq])
+    
+    return sequences

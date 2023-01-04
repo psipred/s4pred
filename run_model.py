@@ -4,7 +4,6 @@ Created on Thu Jun  4 14:49:37 2020
 
 @author:
     Lewis Moffat
-    Bioinformatics Group - Comp. Sci. Dep., University College London (UCL)
     Github: limitloss
 
 TO DO: Add option for sequential model loading and inference, and pull model loading out of module code (bad practice)
@@ -15,6 +14,8 @@ import torch
 import argparse
 import os 
 
+import numpy as np
+
 from network import S4PRED
 from utilities import loadfasta
 
@@ -22,13 +23,24 @@ from utilities import loadfasta
 # =============================================================================
 # Command Line Args
 # =============================================================================
-parser = argparse.ArgumentParser(description='Predict Secondary Structure with the S4PRED model', epilog='Takes a FASTA file for a single sequence and outputs to stdout')
+parser = argparse.ArgumentParser(description='Predict Secondary Structure with the S4PRED model', epilog='Takes a FASTA file containing an arbitrary number of individual sequences and outputs a secondary structure prediction for each.')
 parser.add_argument('input', metavar='input', type=str,
-                    help='FASTA file with a single sequence')
+                    help='FASTA file with a single sequence.')
 parser.add_argument('--device', metavar='d', type=str, default='cpu',
-                    help='Device to run on, Either: cpu or gpu (default; cpu)')
+                    help='Device to run on, Either: cpu or gpu (default; cpu).')
 parser.add_argument('--outfmt', metavar='o', type=str, default='ss2',
-                    help='Output Format, Either: ss2 or fas (default; ss2)')
+                    help='Output Format, Either: ss2 or fas (default; ss2).')
+parser.add_argument("--fas-conf", default=False, action="store_true",
+                    help='Include confidence scores if using .fas output.')
+parser.add_argument("--silent", default=False, action="store_true",
+                    help='Suppress printing predictions to stdout.')
+parser.add_argument("--save-files", default=False, action="store_true",
+                    help='Save each input sequence prediction in an individual file. Makes and saves to a directory called preds in the same dir as this script unless --outdir is specified.')
+parser.add_argument('--outdir', metavar='p', type=str, default=os.path.dirname(os.path.realpath(__file__)),
+                    help='Absolute file-path where files are to be saved, if --save-files is used.')
+parser.add_argument("--save-by-idx", default=False, action="store_true",
+                    help='If saving with --save-files, use a counter to name files instead of sequence ID.')
+
 
 args = parser.parse_args()
 args_dict=vars(args)
@@ -69,45 +81,98 @@ s4pred.model_5.load_state_dict(torch.load(scriptdir + weight_files[4], map_locat
 
 
 # =============================================================================
-# Load Data and Run 
+# Load Data
 # =============================================================================
 
 # Get the Data
-data=loadfasta(args_dict['input'])
+# data=loadfasta(args_dict['input'])
+seqs = loadfasta(args_dict['input'])
 
-with torch.no_grad():
-    ss_conf=s4pred(torch.tensor([data[1]]).to(device))
-    ss=ss_conf.argmax(-1)
-    # move the confidence scores out of log space
-    ss_conf=ss_conf.exp()
-    # renormalize to assuage any precision issues
-    tsum=ss_conf.sum(-1)
-    tsum=torch.cat((tsum.unsqueeze(1),tsum.unsqueeze(1),tsum.unsqueeze(1)),1)
-    ss_conf/=tsum
-    ss=ss.cpu().numpy()
-    ss_conf=ss_conf.cpu().numpy()
+def predict_sequence(data):
+    with torch.no_grad():
+        ss_conf=s4pred(torch.tensor([data[1]]).to(device))
+        ss=ss_conf.argmax(-1)
+        # move the confidence scores out of log space
+        ss_conf=ss_conf.exp()
+        # renormalize to assuage any precision issues
+        tsum=ss_conf.sum(-1)
+        tsum=torch.cat((tsum.unsqueeze(1),tsum.unsqueeze(1),tsum.unsqueeze(1)),1)
+        ss_conf/=tsum
+        ss=ss.cpu().numpy()
+        ss_conf=ss_conf.cpu().numpy()
+    return ss, ss_conf
 
 # =============================================================================
-# Sling the results to stdout
+# Output helpers
 # =============================================================================
 
-ind2char={0:"C",
-          1:"H",
-          2:"E"}
-if args_dict['outfmt'] == 'ss2':
-    print('# PSIPRED VFORMAT (S4PRED V1.0)\n')
+ind2char={0:"C", 1:"H", 2:"E"}
+
+
+
+def format_ss2(data, ss, ss_conf):
+    lines = ['# PSIPRED VFORMAT (S4PRED V1.0)\n']
     for i in range(len(ss)):
-        print("%4d %c %c  %6.3f %6.3f %6.3f" % (i + 1, data[2][i], ind2char[ss[i]], ss_conf[i,0], ss_conf[i,1], ss_conf[i,2]))
+        lines.append("%4d %c %c  %6.3f %6.3f %6.3f" % (i + 1, data[2][i], ind2char[ss[i]], ss_conf[i,0], ss_conf[i,1], ss_conf[i,2]))
+    return lines
 
-if args_dict['outfmt'] == 'fas':
-    print(data[0])
-    print(data[2])
-    print("".join([ind2char[s.item()] for s in ss]))  
+def format_fas(data, ss, ss_conf, include_conf=False):
+    lines=['>'+data[0]]
+    lines.append(data[2])
+    lines.append("".join([ind2char[s.item()] for s in ss]))
+    
+    if include_conf:
+        lines.append(np.array2string(ss_conf[:,0],max_line_width=1e6, precision=3,formatter={'float_kind':lambda x: "%.3f" % x}).replace('[','').replace(']',''))
+        lines.append(np.array2string(ss_conf[:,1],max_line_width=1e6, precision=3,formatter={'float_kind':lambda x: "%.3f" % x}).replace('[','').replace(']',''))
+        lines.append(np.array2string(ss_conf[:,2],max_line_width=1e6, precision=3,formatter={'float_kind':lambda x: "%.3f" % x}).replace('[','').replace(']',''))
+    
+    
+    return lines
 
+# =============================================================================
+# Predict then print AND/OR save
+# =============================================================================
 
+# make sure last char is a '/'
+output_dir = args_dict['outdir']
+if output_dir[-1] != '/': output_dir+='/'
 
+# if directory isnt specified and we're saving then we make a preds/ dir in 
+# s4pred directory
+scriptdir = os.path.dirname(os.path.realpath(__file__))+'/'
+if output_dir == scriptdir and args_dict['save_files']:
+    os.makedirs(scriptdir+'preds/', exist_ok=True)
+    output_dir += 'preds/'
+                                 
 
-
-
-
-
+# Run the loop through each sequence and predict then save and/or print
+for idx, data in enumerate(seqs):
+    
+    ss, ss_conf = predict_sequence(data)
+    
+    if args_dict['outfmt'] == 'ss2':
+        lines=format_ss2(data, ss, ss_conf)
+        suffix = '.ss2'
+    elif args_dict['outfmt'] == 'fas':
+        lines=format_fas(data, ss, ss_conf, include_conf=args_dict['fas_conf'])
+        suffix = '.fas'
+        
+    if not args_dict['silent']:
+        for line in lines: print(line)
+    else:
+        if not args_dict['save_files']:
+            raise ValueError('Using --silent and not using --save-files will lead to no output.')
+        
+    if args_dict['save_files']:
+            
+        if args_dict['save_by_idx']:
+            file_name = 's4_out_'+str(idx)+suffix
+        else:
+            file_name = data[0]+suffix
+        
+        file_path = output_dir + file_name
+        
+        with open(file_path, 'w') as f:
+            for line in lines:
+                f.write(line+'\n')
+        

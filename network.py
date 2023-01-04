@@ -4,8 +4,7 @@ Created on Thu Jun  4 13:44:17 2020
 
 @author:
     Lewis Moffat
-    Bioinformatics Group - Comp. Sci. Dep., University College London (UCL)
-    Github: CraftyColossus
+    Github: limitloss
 
 Inference Only Version of S4PRED - Single Sequence Secondary Structure Pred
 
@@ -25,8 +24,6 @@ take multiple layers of RNNs.
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-
 
 
 class ResidueEmbedding(nn.Embedding):
