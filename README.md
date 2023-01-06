@@ -195,7 +195,11 @@ For a log of recent changes please see the changelog in [CHANGELOG.md](https://g
 
 ## Contact
 
-Current dev & maintainer is [@limitloss](https://github.com/limitloss). Please don't hesitate to reach out, either via my email, which can be found by clicking the [link to the paper](https://github.com/psipred/s4pred/CHANGELOG.md), and clicking on Lewis' name, or on twitter [@limitloss](https://twitter.com/limitloss).  
+Current dev & maintainer is [@limitloss](https://github.com/limitloss). 
+
+Please don't hesitate to reach out, either via:
+- Email, which can be found by clicking the [link to the paper](https://github.com/psipred/s4pred/CHANGELOG.md), and clicking on Lewis' name. 
+- Twitter [@limitloss](https://twitter.com/limitloss).  
 
 [changelog]: ./CHANGELOG.md
 [license]: ./LICENSE
