@@ -5,9 +5,23 @@ All notable changes to this project will be documented in this file.
 This format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project would like to in spirit adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2023-01-06
+
+### Added 
+
+- Functionality to output files with the PSIPRED HFORMAT (`.horiz` files).
+- An example of the output in `example/1qys.horiz`.
+- Details to the `README.md` regarding the output format. 
+
+### Changed
+
+- Fixed version number of output ss2 file header in `run_model.py`.
+- `README.md` to correct typos and improve clarity.
+
 ## [1.1.0] - 2023-01-04
 
 ### Added 
+
 - Dependency on Biopython, specifically the SeqIO module.
 - Example of a FASTA file containing multiple sequences, with `example/multi_seqs.fas`.
 - Added line to README.md regarding the RCSB PDB no longer providing updated secondary structure flat files (i.e. `ss.txt.gz`).  

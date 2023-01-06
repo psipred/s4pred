@@ -29,7 +29,7 @@ parser.add_argument('input', metavar='input', type=str,
 parser.add_argument('--device', metavar='d', type=str, default='cpu',
                     help='Device to run on, Either: cpu or gpu (default; cpu).')
 parser.add_argument('--outfmt', metavar='o', type=str, default='ss2',
-                    help='Output Format, Either: ss2 or fas (default; ss2).')
+                    help='Output Format, Either: ss2, fas, or horiz (default; ss2).')
 parser.add_argument("--fas-conf", default=False, action="store_true",
                     help='Include confidence scores if using .fas output.')
 parser.add_argument("--silent", default=False, action="store_true",
@@ -108,15 +108,18 @@ def predict_sequence(data):
 
 ind2char={0:"C", 1:"H", 2:"E"}
 
-
+def chunkstring(string, length):
+    return (string[0+i:length+i] for i in range(0, len(string), length))
 
 def format_ss2(data, ss, ss_conf):
-    lines = ['# PSIPRED VFORMAT (S4PRED V1.0)\n']
+    lines = ['# PSIPRED VFORMAT (S4PRED V1.2.0)\n']
     for i in range(len(ss)):
         lines.append("%4d %c %c  %6.3f %6.3f %6.3f" % (i + 1, data[2][i], ind2char[ss[i]], ss_conf[i,0], ss_conf[i,1], ss_conf[i,2]))
     return lines
 
 def format_fas(data, ss, ss_conf, include_conf=False):
+    ''' Formats output as a pseudo-FASTA file
+    ''' 
     lines=['>'+data[0]]
     lines.append(data[2])
     lines.append("".join([ind2char[s.item()] for s in ss]))
@@ -126,7 +129,30 @@ def format_fas(data, ss, ss_conf, include_conf=False):
         lines.append(np.array2string(ss_conf[:,1],max_line_width=1e6, precision=3,formatter={'float_kind':lambda x: "%.3f" % x}).replace('[','').replace(']',''))
         lines.append(np.array2string(ss_conf[:,2],max_line_width=1e6, precision=3,formatter={'float_kind':lambda x: "%.3f" % x}).replace('[','').replace(']',''))
     
+def format_horiz(data, ss, ss_conf):
+    ''' Formats output for the PSIPRED HFORMAT .horiz files. 
+        Care must be taken as there is a fixed column width of 60 char
+    '''    
+    lines=['# PSIPRED HFORMAT (S4PRED V1.2.0)']
+    sub_seqs = list(chunkstring(data[2],60))
+    sub_ss   = list(chunkstring("".join([ind2char[s.item()] for s in ss]),60))
     
+    num_len  =  int(np.floor(len(data[2])/10))
+    num_seq  = ''.join(f'{str((i+1)*10):>10}' for i in range(num_len))
+    num_seq  = list(chunkstring(num_seq,60))
+        
+    # get confidences then floor them and convert to string 
+    conf_idxs = ss_conf.argmax(-1)
+    confs = ss_conf[np.arange(len(conf_idxs)),conf_idxs[:]]
+    confs = "".join([str(x) for x in np.floor(confs*10).astype(np.int32)])
+    confs = list(chunkstring(confs,60))
+    
+    for idx, subsq in enumerate(sub_seqs):
+        lines.append(f'\nConf: {confs[idx]}')
+        lines.append(f'Pred: {sub_ss[idx]}')
+        lines.append(f'  AA: {subsq}')
+        lines.append(f'      {num_seq[idx]}\n')
+        
     return lines
 
 # =============================================================================
@@ -156,6 +182,9 @@ for idx, data in enumerate(seqs):
     elif args_dict['outfmt'] == 'fas':
         lines=format_fas(data, ss, ss_conf, include_conf=args_dict['fas_conf'])
         suffix = '.fas'
+    elif args_dict['outfmt'] == 'horiz':
+        lines=format_horiz(data, ss, ss_conf)
+        suffix = '.horiz'
         
     if not args_dict['silent']:
         for line in lines: print(line)

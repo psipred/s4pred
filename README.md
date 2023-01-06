@@ -2,7 +2,7 @@
 
 <p align="center">
 	<a href="CHANGELOG.md">
-        <img src="https://img.shields.io/badge/version-1.1.0-green?style=flat-square&logo=appveyor.svg" alt="Version">
+        <img src="https://img.shields.io/badge/version-1.2.0-green?style=flat-square&logo=appveyor.svg" alt="Version">
     </a>
     <a href="LICENSE">
         <img src="https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg" alt="GPL-3.0 License">
@@ -53,6 +53,8 @@ The S4PRED model can be used to predict a sequence's secondary structure with th
 ```bash
 python run_model.py YOUR_FASTA.fas > YOUR_OUTPUT.ss2
 ```
+
+### Other Examples
 The results of the prediction are piped to `stdout` and prediction should take less than a second. 
 Another example:
 ```bash
@@ -60,6 +62,10 @@ python run_model.py --device gpu --save-files --outdir /home/the_user/s4pred_pre
 ```
 This produces predictions, using an available GPU, for the three sequences in the example FASTA file provided in `./example/multi_seqs.fas`. These are saved as `s4_out_0.ss2`, `s4_out_1.ss2`, and `s4_out_2.ss2` in  the directory `/home/the_user/s4pred_preds/`.
 
+If you wish to simply output an ss2 file for each sequence based on the sequences name (and not ID, as per Biopython's interpretation):
+```bash
+python run_model.py --save-files --outdir /full/path/to/wanted/save/loc/   /path/to/your/fasta/file.fas
+```
 
 ### Input Sequence File
 
@@ -74,8 +80,8 @@ There are several optional arguments you can give. Running `python run_model.py 
 This specifies if you want to run the model on the GPU or the CPU. By default it uses the CPU and in the vast majority of cases this will be sufficient. Also, the model should use less than 1GB of system memory. 
 
 - `--outfmt`
-    - This can be either `ss2` or `fas`. 
-This specifies which output format to use. `ss2` is the default and it corresponds to the PSIPRED vertical format (PSIPRED VFORMAT). Here is an example of what it looks like:
+    - This can be either `ss2` or `fas` or 'horiz'. 
+This specifies which output format to use. `ss2` is the default and it corresponds to the [PSIPRED](https://github.com/psipred/psipred) vertical format (PSIPRED VFORMAT). Here is an example of what it looks like:
 ```
 # PSIPRED VFORMAT (S4PRED V1.0)
 
@@ -92,7 +98,9 @@ The alternative `fas` output returns the sequence FASTA file with the predicted 
 MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQL
 CCCEEEEEEECCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEECCEEEEEEEC
 ```
-The above example output of this file is located in `examples/1qys_ss.fas`.
+The above example output of this file is located in `[examples/1qys_ss.fas](examples/1qys_ss.fas)`.
+
+The `horiz` option outputs the results in the PSIPRED horizontal format (PSIPRED HFORMAT). We maintain this output parity with PSIPRED not only for continuity's sake but also as the HFORMAT is leveraged by the [PSIPRED Workbench](http://bioinf.cs.ucl.ac.uk/psipred/) for graphics, where S4PRED will hopfully soon be added as an option. There is an example of the format  included in `[examples/1qys.horiz](examples/1qys.horiz)`.  
 
 - `--fas-conf`
     - Including this flag has S4PRED output the 3-class confidence scores (i.e. those output in the `.ss2` format) as three additional lines if using `.fas` output. As the second line is the sequence, and the third line is the class assignment, the fourth through sixth lines are the loop, helix, and strand probabilities respectively. 
@@ -191,5 +199,5 @@ Current dev & maintainer is [@limitloss](https://github.com/limitloss). Please d
 
 [changelog]: ./CHANGELOG.md
 [license]: ./LICENSE
-[version-badge]: https://img.shields.io/badge/version-1.1.0-green?style=flat-square&logo=appveyor.svg
+[version-badge]: https://img.shields.io/badge/version-1.2.0-green?style=flat-square&logo=appveyor.svg
 [license-badge]: https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg
