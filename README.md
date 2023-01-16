@@ -15,15 +15,18 @@
  
 # S4PRED
 
-A tool for accurate prediction of a protein's secondary structure from only it's amino acid sequence. 
+A tool for accurate prediction of a protein's secondary structure from only it's amino acid sequence with no evolutionary information. 
 
-This repo contains the fully trained inference model built in Pytorch. Its a simple one line command to run it on a FASTA file containing a protein sequence. S4PRED is a product of our paper [Increasing the accuracy of single sequence prediction methods using a deep semi-supervised learning framework](https://academic.oup.com/bioinformatics/article/37/21/3744/6313164) published in Bioinformatics.
+### About
 
-We also provide the 1.08M example pseudo-labelled training set used for training S4PRED. This has been cross-validated against the CB513 test set using a variety of sequence-searching-based methods, as real structure labels aren't available. Proper cross-validation when working with large sets of protein sequences is incredibly important, especially when working with powerful parametric models like deep neural networks.
+This repo contains the fully **trained inference model** built in Pytorch. 
+Its a simple one line command to run it on a FASTA file containing a protein sequence. 
+S4PRED is a state-of-the-art single-sequence model meaning it doesn't use homology/evolutionary information to make predictions, only the primary amino acid sequence.
+It is also a product of our paper [Increasing the accuracy of single sequence prediction methods using a deep semi-supervised learning framework](https://academic.oup.com/bioinformatics/article/37/21/3744/6313164) published in Bioinformatics.
 
-S4PRED is a state-of-the-art single-sequence model meaning it doesn't use homology information to make predictions, only the primary amino acid sequence. 
-
-
+We also provide the **1.08M example** pseudo-labelled **training set** used for training S4PRED. This has been evaluated against the CB513 test set using a cascade of sequence-searching-based methods and annotation matching, as real structure labels aren't available. 
+Proper cross-validation when working with large sets of protein sequences is incredibly important, especially when working with powerful parametric models like deep neural networks.
+ 
 
 ## Requirements
 
@@ -119,7 +122,7 @@ The alternative `fas` output returns the sequence FASTA file with the predicted 
 MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQL
 CCCEEEEEEECCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEECCEEEEEEEC
 ```
-The above example output of this file is located in `[examples/1qys_ss.fas](examples/1qys_ss.fas)`. This is similar to the format of the FASTA flat-file that the RCSB PDB used to provide for all sequences with their DSSP based secondary structure (Downloaded from [here](https://cdn.rcsb.org/etl/kabschSander/ss.txt.gz)). It looks like it was discontinued with the old API, but that is speculation.
+The above example output of this file is located in [examples/1qys_ss.fas](examples/1qys_ss.fas). This is similar to the format of the FASTA flat-file that the RCSB PDB used to provide for all sequences with their DSSP based secondary structure (Downloaded from [here](https://cdn.rcsb.org/etl/kabschSander/ss.txt.gz)). It looks like it was discontinued with the old API, but that is speculation.
 
 The `horiz` option outputs the results in the PSIPRED horizontal format (PSIPRED HFORMAT). We maintain this output parity with PSIPRED not only for continuity's sake but also as the HFORMAT is leveraged by the [PSIPRED Workbench](http://bioinf.cs.ucl.ac.uk/psipred/) for graphics, where S4PRED will hopfully soon be added as an option. There is an example of the format  included in [examples/1qys.horiz](examples/1qys.horiz).  
 
