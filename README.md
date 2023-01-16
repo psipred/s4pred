@@ -54,7 +54,7 @@ The S4PRED model can be used to predict a sequence's secondary structure with th
 python run_model.py YOUR_FASTA.fas > YOUR_OUTPUT.ss2
 ```
 
-### Other Examples
+### Generic Examples
 The results of the prediction are piped to `stdout` and prediction should take less than a second. 
 Another example:
 ```bash
@@ -66,6 +66,9 @@ If you wish to simply output an ss2 file for each sequence based on the sequence
 ```bash
 python run_model.py --save-files --outdir /full/path/to/wanted/save/loc/   /path/to/your/fasta/file.fas
 ```
+
+See below for further details regarding the different flags and options that can be set.
+
 
 ### Input Sequence File
 
@@ -80,27 +83,7 @@ There are several optional arguments you can give. Running `python run_model.py 
 This specifies if you want to run the model on the GPU or the CPU. By default it uses the CPU and in the vast majority of cases this will be sufficient. Also, the model should use less than 1GB of system memory. 
 
 - `--outfmt`
-    - This can be either `ss2` or `fas` or 'horiz'. 
-This specifies which output format to use. `ss2` is the default and it corresponds to the [PSIPRED](https://github.com/psipred/psipred) vertical format (PSIPRED VFORMAT). Here is an example of what it looks like:
-```
-# PSIPRED VFORMAT (S4PRED V1.0)
-
-   1 M C   0.997  0.000  0.002
-   2 G C   0.984  0.000  0.016
-   3 D C   0.812  0.001  0.187
-   ...
-```
-A full example output of this file is located in `examples/1qys.ss2`.
-
-The alternative `fas` output returns the sequence FASTA file with the predicted secondary structure concatenated on a second line. This is similar to the FASTA flat-file that the RCSB PDB provides for all sequences and their DSSP based secondary structure (Downloaded from [here](https://cdn.rcsb.org/etl/kabschSander/ss.txt.gz)). We note that it doesn't appear that the PDB is continuing to provide up-to-date versions of the flat file. Here is an example:
-```
->1QYS_1|Chain A|TOP7|Computationally Designed Sequence
-MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQL
-CCCEEEEEEECCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEECCEEEEEEEC
-```
-The above example output of this file is located in `[examples/1qys_ss.fas](examples/1qys_ss.fas)`.
-
-The `horiz` option outputs the results in the PSIPRED horizontal format (PSIPRED HFORMAT). We maintain this output parity with PSIPRED not only for continuity's sake but also as the HFORMAT is leveraged by the [PSIPRED Workbench](http://bioinf.cs.ucl.ac.uk/psipred/) for graphics, where S4PRED will hopfully soon be added as an option. There is an example of the format  included in `[examples/1qys.horiz](examples/1qys.horiz)`.  
+    - This can be either `ss2` or `fas` or `horiz`. See the next section for exact details regarding output formats.
 
 - `--fas-conf`
     - Including this flag has S4PRED output the 3-class confidence scores (i.e. those output in the `.ss2` format) as three additional lines if using `.fas` output. As the second line is the sequence, and the third line is the class assignment, the fourth through sixth lines are the loop, helix, and strand probabilities respectively. 
@@ -116,6 +99,30 @@ The `horiz` option outputs the results in the PSIPRED horizontal format (PSIPRED
     
 - `--save-by-idx`
     - If saving with --save-files, use a counter to name files instead of sequence ID. This uses the default file name prefix of `s4_out_` meaning the files are saved as `s4_out_0.ss2` or `s4_out_0.fas` for the first sequence in a FASTA file. 
+
+### Output Formats
+
+Of the output file formats, `ss2` is the default and it corresponds to the [PSIPRED](https://github.com/psipred/psipred) vertical format (PSIPRED VFORMAT). Here is an example of what it looks like:
+```
+# PSIPRED VFORMAT (S4PRED V1.0)
+
+   1 M C   0.997  0.000  0.002
+   2 G C   0.984  0.000  0.016
+   3 D C   0.812  0.001  0.187
+   ...
+```
+A full example output of this file is located in `examples/1qys.ss2`.
+
+The alternative `fas` output returns the sequence FASTA file with the predicted secondary structure concatenated on a second line. Here is an example:
+```
+>1QYS_1|Chain A|TOP7|Computationally Designed Sequence
+MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQL
+CCCEEEEEEECCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEEECCHHHHHHHHHHHHHHHHHCCCCEEEEEEECCEEEEEEEC
+```
+The above example output of this file is located in `[examples/1qys_ss.fas](examples/1qys_ss.fas)`. This is similar to the format of the FASTA flat-file that the RCSB PDB used to provide for all sequences with their DSSP based secondary structure (Downloaded from [here](https://cdn.rcsb.org/etl/kabschSander/ss.txt.gz)). It looks like it was discontinued with the old API, but that is speculation.
+
+The `horiz` option outputs the results in the PSIPRED horizontal format (PSIPRED HFORMAT). We maintain this output parity with PSIPRED not only for continuity's sake but also as the HFORMAT is leveraged by the [PSIPRED Workbench](http://bioinf.cs.ucl.ac.uk/psipred/) for graphics, where S4PRED will hopfully soon be added as an option. There is an example of the format  included in [examples/1qys.horiz](examples/1qys.horiz).  
+
 
 ### Example Run
 The following is an example run on the sequence of TOP7 (PDB ID: 1QYS) using the GPU and output to the FASTA like format. The corresponding FASTA input file is located in `examples/1qys.fas` (this is the PDB FASTA file stripped of the 6-HIS tag on the C-Terminus). 

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 This format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project would like to in spirit adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2023-01-06
+
+### Changed
+
+- `README.md` to correct broken links and improve clarity.
+- `s4pred.svg` from an inkscape SVG to a standard SVG so its not bloated with metadata and other unneccesary information. 
+
+
 ## [1.2.0] - 2023-01-06
 
 ### Added 
