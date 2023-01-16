@@ -26,19 +26,19 @@ from utilities import loadfasta
 parser = argparse.ArgumentParser(description='Predict Secondary Structure with the S4PRED model', epilog='Takes a FASTA file containing an arbitrary number of individual sequences and outputs a secondary structure prediction for each.')
 parser.add_argument('input', metavar='input', type=str,
                     help='FASTA file with a single sequence.')
-parser.add_argument('--device', metavar='d', type=str, default='cpu',
+parser.add_argument('-d','--device', metavar='d', type=str, default='cpu',
                     help='Device to run on, Either: cpu or gpu (default; cpu).')
-parser.add_argument('--outfmt', metavar='o', type=str, default='ss2',
+parser.add_argument('-t','--outfmt', metavar='o', type=str, default='ss2',
                     help='Output Format, Either: ss2, fas, or horiz (default; ss2).')
-parser.add_argument("--fas-conf", default=False, action="store_true",
+parser.add_argument('-c','--fas-conf', default=False, action='store_true',
                     help='Include confidence scores if using .fas output.')
-parser.add_argument("--silent", default=False, action="store_true",
+parser.add_argument('-s','--silent', default=False, action='store_true',
                     help='Suppress printing predictions to stdout.')
-parser.add_argument("--save-files", default=False, action="store_true",
+parser.add_argument('-z','--save-files', default=False, action='store_true',
                     help='Save each input sequence prediction in an individual file. Makes and saves to a directory called preds in the same dir as this script unless --outdir is specified.')
-parser.add_argument('--outdir', metavar='p', type=str, default=os.path.dirname(os.path.realpath(__file__)),
+parser.add_argument('-o','--outdir', metavar='p', type=str, default=os.path.dirname(os.path.realpath(__file__)),
                     help='Absolute file-path where files are to be saved, if --save-files is used.')
-parser.add_argument("--save-by-idx", default=False, action="store_true",
+parser.add_argument('-x','--save-by-idx', default=False, action='store_true',
                     help='If saving with --save-files, use a counter to name files instead of sequence ID.')
 
 
@@ -50,7 +50,7 @@ args_dict=vars(args)
 # =============================================================================
 
 # Load and freeze model
-if args_dict['device']=='cpu': device = torch.device("cpu:0") 
+if args_dict['device']=='cpu': device = torch.device('cpu:0') 
 if args_dict['device']=='gpu': device = torch.device("cuda:0") 
 
 s4pred=S4PRED().to(device)
@@ -85,7 +85,6 @@ s4pred.model_5.load_state_dict(torch.load(scriptdir + weight_files[4], map_locat
 # =============================================================================
 
 # Get the Data
-# data=loadfasta(args_dict['input'])
 seqs = loadfasta(args_dict['input'])
 
 def predict_sequence(data):
@@ -112,6 +111,8 @@ def chunkstring(string, length):
     return (string[0+i:length+i] for i in range(0, len(string), length))
 
 def format_ss2(data, ss, ss_conf):
+    ''' Formats output for the PSIPRED VFORMAT .ss2 files. 
+    ''' 
     lines = ['# PSIPRED VFORMAT (S4PRED V1.2.0)\n']
     for i in range(len(ss)):
         lines.append("%4d %c %c  %6.3f %6.3f %6.3f" % (i + 1, data[2][i], ind2char[ss[i]], ss_conf[i,0], ss_conf[i,1], ss_conf[i,2]))
@@ -128,6 +129,8 @@ def format_fas(data, ss, ss_conf, include_conf=False):
         lines.append(np.array2string(ss_conf[:,0],max_line_width=1e6, precision=3,formatter={'float_kind':lambda x: "%.3f" % x}).replace('[','').replace(']',''))
         lines.append(np.array2string(ss_conf[:,1],max_line_width=1e6, precision=3,formatter={'float_kind':lambda x: "%.3f" % x}).replace('[','').replace(']',''))
         lines.append(np.array2string(ss_conf[:,2],max_line_width=1e6, precision=3,formatter={'float_kind':lambda x: "%.3f" % x}).replace('[','').replace(']',''))
+    
+    return lines
     
 def format_horiz(data, ss, ss_conf):
     ''' Formats output for the PSIPRED HFORMAT .horiz files. 

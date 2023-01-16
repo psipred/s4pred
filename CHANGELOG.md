@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 This format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project would like to in spirit adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.1] - 2023-01-06
+## [1.2.2] - 2023-01-16
+
+### Changed
+
+- Fixed bug in `run_model.py` causing FASTA output to fail silently.
+- Added single letter options for command line arguments.
+
+## [1.2.1] - 2023-01-16
 
 ### Changed
 

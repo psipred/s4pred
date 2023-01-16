@@ -2,7 +2,7 @@
 
 <p align="center">
 	<a href="CHANGELOG.md">
-        <img src="https://img.shields.io/badge/version-1.2.1-green?style=flat-square&logo=appveyor.svg" alt="Version">
+        <img src="https://img.shields.io/badge/version-1.2.2-green?style=flat-square&logo=appveyor.svg" alt="Version">
     </a>
     <a href="LICENSE">
         <img src="https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg" alt="GPL-3.0 License">
@@ -81,26 +81,26 @@ The expected input is a FASTA formatted file with one or more sequences in it, `
 
 There are several optional arguments you can give. Running `python run_model.py -h` from a terminal will print out all options with short descriptions. More explanation is included below:
 
-- `--device`
+- `-d`, `--device`
     - This can be either `cpu` or `gpu`. 
 This specifies if you want to run the model on the GPU or the CPU. By default it uses the CPU and in the vast majority of cases this will be sufficient. Also, the model should use less than 1GB of system memory. 
 
-- `--outfmt`
+- `-t`, `--outfmt`
     - This can be either `ss2` or `fas` or `horiz`. See the next section for exact details regarding output formats.
 
-- `--fas-conf`
+- `-c`, `--fas-conf`
     - Including this flag has S4PRED output the 3-class confidence scores (i.e. those output in the `.ss2` format) as three additional lines if using `.fas` output. As the second line is the sequence, and the third line is the class assignment, the fourth through sixth lines are the loop, helix, and strand probabilities respectively. 
 
-- `--silent`
+- `-s`, `--silent`
     - Flag to suppress printing predictions to stdout.
     
-- `--save-files` 
+- `-z`, `--save-files` 
     - Flag to save each input sequence prediction in an individual file. Makes and saves to a directory called `preds/` in the same dir as this script unless --outdir is specified. **Note:** without the  `--save-by-idx` described below, the files are saved using the name record that Biopython extracts from the header line of the FASTA file. It is common for this to produce somewhat messy file names (*TO DO:* add name and ID post processing). 
 
-- `--outdir p`
+- `-o`, `--outdir p`
     - Absolute file-path `p`, where files are to be saved. If --save-files is used. If not specified, it defaults to making a new directory in the S4PRED directory called `preds/` and then saves sequence predictions in that dir. 
     
-- `--save-by-idx`
+- `-x`, `--save-by-idx`
     - If saving with --save-files, use a counter to name files instead of sequence ID. This uses the default file name prefix of `s4_out_` meaning the files are saved as `s4_out_0.ss2` or `s4_out_0.fas` for the first sequence in a FASTA file. 
 
 ### Output Formats
@@ -213,5 +213,5 @@ Please don't hesitate to reach out, either via:
 
 [changelog]: ./CHANGELOG.md
 [license]: ./LICENSE
-[version-badge]: https://img.shields.io/badge/version-1.2.1-green?style=flat-square&logo=appveyor.svg
+[version-badge]: https://img.shields.io/badge/version-1.2.2-green?style=flat-square&logo=appveyor.svg
 [license-badge]: https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg
