@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 This format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project would like to in spirit adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.3] - 2023-01-16
+
+### Added
+
+- Option to save the results in a secondary file format. E.g. a sequence prediction can be saved as both ss2 and horiz in the same run without having to run twice.  
+
+### Changed 
+
+- `README.md` to correct broken links and improve clarity.
+
+
 ## [1.2.2] - 2023-01-16
 
 ### Changed

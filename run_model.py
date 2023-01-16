@@ -28,8 +28,8 @@ parser.add_argument('input', metavar='input', type=str,
                     help='FASTA file with a single sequence.')
 parser.add_argument('-d','--device', metavar='d', type=str, default='cpu',
                     help='Device to run on, Either: cpu or gpu (default; cpu).')
-parser.add_argument('-t','--outfmt', metavar='o', type=str, default='ss2',
-                    help='Output Format, Either: ss2, fas, or horiz (default; ss2).')
+parser.add_argument('-t','--outfmt', metavar='m', type=str, default='ss2',
+                    help='Output format, Either: ss2, fas, or horiz (default; ss2).')
 parser.add_argument('-c','--fas-conf', default=False, action='store_true',
                     help='Include confidence scores if using .fas output.')
 parser.add_argument('-s','--silent', default=False, action='store_true',
@@ -40,7 +40,8 @@ parser.add_argument('-o','--outdir', metavar='p', type=str, default=os.path.dirn
                     help='Absolute file-path where files are to be saved, if --save-files is used.')
 parser.add_argument('-x','--save-by-idx', default=False, action='store_true',
                     help='If saving with --save-files, use a counter to name files instead of sequence ID.')
-
+parser.add_argument('-t2','--outfmt2', metavar='n', type=str, default='',
+                    help='Save output with a 2nd format, Either: ss2, fas, or horiz (default; None).')
 
 args = parser.parse_args()
 args_dict=vars(args)
@@ -113,7 +114,7 @@ def chunkstring(string, length):
 def format_ss2(data, ss, ss_conf):
     ''' Formats output for the PSIPRED VFORMAT .ss2 files. 
     ''' 
-    lines = ['# PSIPRED VFORMAT (S4PRED V1.2.0)\n']
+    lines = ['# PSIPRED VFORMAT (S4PRED V1.2.3)\n']
     for i in range(len(ss)):
         lines.append("%4d %c %c  %6.3f %6.3f %6.3f" % (i + 1, data[2][i], ind2char[ss[i]], ss_conf[i,0], ss_conf[i,1], ss_conf[i,2]))
     return lines
@@ -136,7 +137,7 @@ def format_horiz(data, ss, ss_conf):
     ''' Formats output for the PSIPRED HFORMAT .horiz files. 
         Care must be taken as there is a fixed column width of 60 char
     '''    
-    lines=['# PSIPRED HFORMAT (S4PRED V1.2.0)']
+    lines=['# PSIPRED HFORMAT (S4PRED V1.2.3)']
     sub_seqs = list(chunkstring(data[2],60))
     sub_ss   = list(chunkstring("".join([ind2char[s.item()] for s in ss]),60))
     
@@ -207,4 +208,46 @@ for idx, data in enumerate(seqs):
         with open(file_path, 'w') as f:
             for line in lines:
                 f.write(line+'\n')
+        
+    # repeat boolean logic cascade for if a secondary output format is provided
+    if len(args_dict['outfmt2'])>2:
+        if args_dict['outfmt2'] == 'ss2':
+            lines=format_ss2(data, ss, ss_conf)
+            suffix = '.ss2'
+        elif args_dict['outfmt2'] == 'fas':
+            lines=format_fas(data, ss, ss_conf, include_conf=args_dict['fas_conf'])
+            suffix = '.fas'
+        elif args_dict['outfmt2'] == 'horiz':
+            lines=format_horiz(data, ss, ss_conf)
+            suffix = '.horiz'
+        else:
+            raise ValueError('Invalid 2nd output file format provided. Use horiz, ss2, or fas.')
+        
+        if not args_dict['silent']:
+            for line in lines: print(line)
+        
+        if args_dict['save_files']:
+            
+            if args_dict['save_by_idx']:
+                file_name = 's4_out_'+str(idx)+suffix
+            else:
+                file_name = data[0]+suffix
+            
+            file_path = output_dir + file_name
+            
+            with open(file_path, 'w') as f:
+                for line in lines:
+                    f.write(line+'\n')
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         

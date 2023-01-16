@@ -2,7 +2,7 @@
 
 <p align="center">
 	<a href="CHANGELOG.md">
-        <img src="https://img.shields.io/badge/version-1.2.2-green?style=flat-square&logo=appveyor.svg" alt="Version">
+        <img src="https://img.shields.io/badge/version-1.2.3-green?style=flat-square&logo=appveyor.svg" alt="Version">
     </a>
     <a href="LICENSE">
         <img src="https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg" alt="GPL-3.0 License">
@@ -20,7 +20,7 @@ A tool for accurate prediction of a protein's secondary structure from only it's
 ### About
 
 This repo contains the fully **trained inference model** built in Pytorch. 
-Its a simple one line command to run it on a FASTA file containing a protein sequence. 
+Its a simple one line command to run it on a FASTA file containing a protein sequence(s). 
 S4PRED is a state-of-the-art single-sequence model meaning it doesn't use homology/evolutionary information to make predictions, only the primary amino acid sequence.
 It is also a product of our paper [Increasing the accuracy of single sequence prediction methods using a deep semi-supervised learning framework](https://academic.oup.com/bioinformatics/article/37/21/3744/6313164) published in Bioinformatics.
 
@@ -102,6 +102,9 @@ This specifies if you want to run the model on the GPU or the CPU. By default it
     
 - `-x`, `--save-by-idx`
     - If saving with --save-files, use a counter to name files instead of sequence ID. This uses the default file name prefix of `s4_out_` meaning the files are saved as `s4_out_0.ss2` or `s4_out_0.fas` for the first sequence in a FASTA file. 
+
+- `-t2`,`--outfmt2`
+    - Save output with a 2nd format, where the first is provided by `-t`, Either: ss2, fas, or horiz (default; None). The default of `None` leads to no second file format being saved unless it is explicitly provided. 
 
 ### Output Formats
 
@@ -213,5 +216,5 @@ Please don't hesitate to reach out, either via:
 
 [changelog]: ./CHANGELOG.md
 [license]: ./LICENSE
-[version-badge]: https://img.shields.io/badge/version-1.2.2-green?style=flat-square&logo=appveyor.svg
+[version-badge]: https://img.shields.io/badge/version-1.2.3-green?style=flat-square&logo=appveyor.svg
 [license-badge]: https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg
