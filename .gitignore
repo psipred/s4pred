@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# SMK don't track weights etc
+weights*
+*.ss2
+*.horiz
+preds*

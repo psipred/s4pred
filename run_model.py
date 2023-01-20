@@ -42,6 +42,8 @@ parser.add_argument('-x','--save-by-idx', default=False, action='store_true',
                     help='If saving with --save-files, use a counter to name files instead of sequence ID.')
 parser.add_argument('-t2','--outfmt2', metavar='n', type=str, default='',
                     help='Save output with a 2nd format, Either: ss2, fas, or horiz (default; None).')
+parser.add_argument('-p','--prefix', metavar='n', type=str, default=None,
+                   help='Use prefix for output filenames, rather than stdout (default; None).')
 
 args = parser.parse_args()
 args_dict=vars(args)
@@ -198,10 +200,14 @@ for idx, data in enumerate(seqs):
         
     if args_dict['save_files']:
             
+        
         if args_dict['save_by_idx']:
             file_name = 's4_out_'+str(idx)+suffix
         else:
-            file_name = data[0]+suffix
+            if args_dict['prefix']:
+                file_name = args_dict['prefix'] + suffix
+            else:
+                file_name = data[0]+suffix
         
         file_path = output_dir + file_name
         
@@ -229,10 +235,14 @@ for idx, data in enumerate(seqs):
         if args_dict['save_files']:
             
             if args_dict['save_by_idx']:
-                file_name = 's4_out_'+str(idx)+suffix
+  
+               file_name = 's4_out_'+str(idx)+suffix
             else:
-                file_name = data[0]+suffix
-            
+                if args_dict['prefix']:
+                    file_name = args_dict['prefix'] + suffix
+                else:
+                    file_name = data[0]+suffix
+             
             file_path = output_dir + file_name
             
             with open(file_path, 'w') as f:
