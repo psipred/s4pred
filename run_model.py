@@ -116,7 +116,7 @@ def chunkstring(string, length):
 def format_ss2(data, ss, ss_conf):
     ''' Formats output for the PSIPRED VFORMAT .ss2 files. 
     ''' 
-    lines = ['# PSIPRED VFORMAT (S4PRED V1.2.3)\n']
+    lines = ['# PSIPRED VFORMAT (S4PRED V1.2.4)\n']
     for i in range(len(ss)):
         lines.append("%4d %c %c  %6.3f %6.3f %6.3f" % (i + 1, data[2][i], ind2char[ss[i]], ss_conf[i,0], ss_conf[i,1], ss_conf[i,2]))
     return lines
@@ -139,7 +139,7 @@ def format_horiz(data, ss, ss_conf):
     ''' Formats output for the PSIPRED HFORMAT .horiz files. 
         Care must be taken as there is a fixed column width of 60 char
     '''    
-    lines=['# PSIPRED HFORMAT (S4PRED V1.2.3)']
+    lines=['# PSIPRED HFORMAT (S4PRED V1.2.4)']
     sub_seqs = list(chunkstring(data[2],60))
     sub_ss   = list(chunkstring("".join([ind2char[s.item()] for s in ss]),60))
     

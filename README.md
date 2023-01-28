@@ -2,7 +2,7 @@
 
 <p align="center">
 	<a href="CHANGELOG.md">
-        <img src="https://img.shields.io/badge/version-1.2.3-green?style=flat-square&logo=appveyor.svg" alt="Version">
+        <img src="https://img.shields.io/badge/version-1.2.4-green?style=flat-square&logo=appveyor.svg" alt="Version">
     </a>
     <a href="LICENSE">
         <img src="https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg" alt="GPL-3.0 License">
@@ -226,5 +226,5 @@ Please don't hesitate to reach out, either via:
 
 [changelog]: ./CHANGELOG.md
 [license]: ./LICENSE
-[version-badge]: https://img.shields.io/badge/version-1.2.3-green?style=flat-square&logo=appveyor.svg
+[version-badge]: https://img.shields.io/badge/version-1.2.4-green?style=flat-square&logo=appveyor.svg
 [license-badge]: https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square&logo=appveyor.svg
