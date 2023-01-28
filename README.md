@@ -19,10 +19,11 @@ A tool for accurate prediction of a protein's secondary structure from only it's
 
 ### About
 
-This repo contains the fully **trained inference model** built in Pytorch. 
-Its a simple one line command to run it on a FASTA file containing a protein sequence(s). 
+
 S4PRED is a state-of-the-art single-sequence model meaning it doesn't use homology/evolutionary information to make predictions, only the primary amino acid sequence.
 It is also a product of our paper [Increasing the accuracy of single sequence prediction methods using a deep semi-supervised learning framework](https://academic.oup.com/bioinformatics/article/37/21/3744/6313164) published in Bioinformatics.
+This repo contains the fully **trained inference model** built in Pytorch. 
+Its a simple one line command to run it on a FASTA file containing a protein sequence(s). 
 
 We also provide the **1.08M example** pseudo-labelled **training set** used for training S4PRED. This has been evaluated against the CB513 test set using a cascade of sequence-searching-based methods and annotation matching, as real structure labels aren't available. 
 Proper cross-validation when working with large sets of protein sequences is incredibly important, especially when working with powerful parametric models like deep neural networks.
@@ -49,6 +50,11 @@ wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz
 tar -xvzf weights.tar.gz
 ``` 
 This leaves you with a `weights/` directory containing the five models. Each weight file is ~86MB and so all together make up roughly 430MB uncompressed (~395M compressed). If you would like to check it, the MD5 of the tarball is `e04ad7d10b61551f7e07a86b65bb88dc`. If you have python and Pytorch installed you should be ready to go. 
+
+## Using the PSIPRED Workbench
+
+If you would like to generate predictions with S4PRED for a small number of sequences or, for whatever reason, you are unable to run S4PRED locally, there is now the option to use S4PRED via the [PSIPRED Workbench](http://bioinf.cs.ucl.ac.uk/psipred/).
+This gives you the option to run S4PRED, along with a variety of other prediction tools, on your sequence(s) of interest and to be emailed when the predictions have all been made with a pretty display of the results along with download links for the generated predictions. 
 
 ## Usage
 
@@ -105,6 +111,9 @@ This specifies if you want to run the model on the GPU or the CPU. By default it
 
 - `-t2`,`--outfmt2`
     - Save output with a 2nd format, where the first is provided by `-t`, Either: ss2, fas, or horiz (default; None). The default of `None` leads to no second file format being saved unless it is explicitly provided. 
+
+- `-p`,`--prefix`
+    - Use the supplied prefix for output filenames, rather than stdout (default; None), overriding any of the naming decided by the relevant above options.
 
 ### Output Formats
 

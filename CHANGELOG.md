@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 This format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project would like to in spirit adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.4] - 2023-01-28
+
+### Added
+
+-  Option to supply a file prefix with a new command line option for `run_model.py`,
+
+### Changed 
+
+- `README.md` to reorder the About section, add a section to describe the new prefix option, and a section describing the new method's PSIPRED Workbench availability. 
+
 ## [1.2.3] - 2023-01-16
 
 ### Added
