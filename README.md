@@ -211,7 +211,7 @@ Here is the corresponding BibTex:
 
 ## Changelog
 
-For a log of recent changes please see the changelog in [CHANGELOG.md](https://github.com/psipred/s4pred/CHANGELOG.md). This is currently being updated manually by [@limitloss](https://github.com/limitloss).
+For a log of recent changes please see the changelog in [CHANGELOG.md](./CHANGELOG.md). This is currently being updated manually by [@limitloss](https://github.com/limitloss).
 
   
 
