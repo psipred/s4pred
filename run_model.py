@@ -144,7 +144,7 @@ def format_horiz(data, ss, ss_conf):
     sub_ss   = list(chunkstring("".join([ind2char[s.item()] for s in ss]),60))
     
     num_len  =  int(np.floor(len(data[2])/10))
-    num_seq  = ''.join(f'{str((i+1)*10):>10}' for i in range(num_len))
+    num_seq  = ''.join(f'{str((i+1)*10):>10}' for i in range(num_len+1))
     num_seq  = list(chunkstring(num_seq,60))
         
     # get confidences then floor them and convert to string 
@@ -152,7 +152,7 @@ def format_horiz(data, ss, ss_conf):
     confs = ss_conf[np.arange(len(conf_idxs)),conf_idxs[:]]
     confs = "".join([str(x) for x in np.floor(confs*10).astype(np.int32)])
     confs = list(chunkstring(confs,60))
-    
+
     for idx, subsq in enumerate(sub_seqs):
         lines.append(f'\nConf: {confs[idx]}')
         lines.append(f'Pred: {sub_ss[idx]}')
