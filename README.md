@@ -15,7 +15,7 @@
  
 # S4PRED
 
-A tool for accurate prediction of a protein's secondary structure from only it's amino acid sequence with no evolutionary information. 
+A tool for accurate prediction of a protein's secondary structure from only its amino acid sequence with no evolutionary information i.e. MSA required. 
 
 ### About
 
