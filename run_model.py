@@ -44,7 +44,8 @@ parser.add_argument('-t2','--outfmt2', metavar='n', type=str, default='',
                     help='Save output with a 2nd format, Either: ss2, fas, or horiz (default; None).')
 parser.add_argument('-p','--prefix', metavar='n', type=str, default=None,
                    help='Use prefix for output filenames, rather than stdout (default; None).')
-
+parser.add_argument('-T','--threads', metavar='n', type=int, default=None,
+                   help='Number of CPU threads to use for inference (default; Number of CPU cores).')
 args = parser.parse_args()
 args_dict=vars(args)
 
@@ -52,11 +53,16 @@ args_dict=vars(args)
 # Model Initialization
 # =============================================================================
 
+# set number of threads (so we can play nice with other parallel processes)
+if args_dict['threads']:
+    torch.set_num_threads(args_dict['threads'])
+
 # Load and freeze model
 if args_dict['device']=='cpu': device = torch.device('cpu:0') 
 if args_dict['device']=='gpu': device = torch.device("cuda:0") 
 
 s4pred=S4PRED().to(device)
+
 s4pred.eval()
 # Setting requires_grad is redundant but pytorch has been weird in the past
 s4pred.requires_grad=False
