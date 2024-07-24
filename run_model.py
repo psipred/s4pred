@@ -199,7 +199,10 @@ for idx, data in enumerate(seqs):
         suffix = '.horiz'
         
     if not args_dict['silent']:
-        for line in lines: print(line)
+        try:
+            for line in lines: print(line)
+        except BrokenPipeError:
+            pass
     else:
         if not args_dict['save_files']:
             raise ValueError('Using --silent and not using --save-files will lead to no output.')
