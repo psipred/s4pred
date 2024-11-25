@@ -204,6 +204,16 @@ Importantly, this training set has had several different filters applied (see ou
 This makes the dataset ideal for training not just secondary structure predictors but also unsupervised sequence models. 
 In both cases, using this training set with CB513 as a test set provides a strong test of generalization.     
 
+### Real-Labelled Data
+
+The real-labelled training, validation, and test sets are also available for download as `s4pred_cath_train.fas`, `s4pred_cath_val.fas`, and `s4pred_cb513_test.fas` respectively. These use the same flat file format as `s4pred_train.fas`. 
+```bash
+wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/s4pred_cath_train.fas
+wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/s4pred_cath_val.fas
+wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/s4pred_cb513_test.fas
+``` 
+
+
 ## Inference Code
 
 If you'd like to train your own version of S4PRED using the AWD-GRU model we used we recommend building off the offical Salesforce 
