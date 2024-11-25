@@ -1,0 +1,6 @@
+- name: Install S4PRED
+  hosts: all
+  roles:
+    - s4pred
+  vars_files:
+   - ./config_vars.yml

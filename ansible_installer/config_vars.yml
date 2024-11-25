@@ -1,0 +1,5 @@
+---
+
+app_location: ~/test_ansible/Applications
+data_location: ~/test_ansible/Data
+python_version: 3.11

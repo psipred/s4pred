@@ -37,7 +37,36 @@ Proper cross-validation when working with large sets of protein sequences is inc
 
 The script hasn't been tested on newer Pytorch builds but it should run without any issues. Likewise, most reasonably contemporary Biopython versions should be sufficient, barring some of the oldest.  
 
-## Installation
+## Installation with ansible:
+
+First ensure that ansible is installeded on your system, then clone
+the github repo. 
+
+``` bash
+pip install ansible
+git clone https://github.com/psipred/s4pred.git
+cd s4pred/ansible_installer
+```
+
+Next edit the the config_vars.yml to reflect where you would like s4pread and 
+its underlying data to be installed.
+
+You can now run ansible as per
+
+``` bash
+ansible-playbook -i hosts install.yml
+```
+
+You can edit the hosts file to install s4pred on one or more machines. Ansible 
+installation creates a python virtualenv called s4_env. You activate this with
+
+``` bash 
+source [app path]/s4_env/bin/activate
+```
+
+If you're using a virtualenv to install Torch you may find you need to add the paths to virtualenv versions of cudnn/lib/ and nccl/lib/ to your LD_LIBRARY_PATH 
+
+## Manual Installation
 
 Clone the directory
 ```bash
