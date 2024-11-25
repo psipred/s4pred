@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 This format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project would like to in spirit adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.6] - 2023-01-28
+
+### Added
+
+-  New ansible installation scripts in `ansible_installer/`.
+
 ## [1.2.5] - 2023-10-02
 
 ### Changed
